@@ -26,5 +26,8 @@
 # macOS
 .DS_Store
 
+# Visual Studio Config
+.vsconfig
+
 # Windows
 Thumbs.db

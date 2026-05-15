@@ -6,13 +6,19 @@ A Unity project — terminal emulator and development tools for the Unity Editor
 
 ```
 Assets/
+├── Animations/   # Animation controllers and clips
+│   ├── Sprites/  # Sprite frame sequences
+│   └── ...
 ├── Editor/       # Editor scripts and tools
+│   ├── QuickAccessMenu.cs
+│   ├── QuickAccessScenes_Generated.cs
 │   └── TerminalWindow.cs
+├── Fonts/        # Custom fonts
+├── Runtime/      # Runtime scripts and assembly definition
 ├── Scenes/       # Game and UI scenes
+│   ├── LOADING.unity
 │   └── SampleScene.unity
-├── Scripts/      # Runtime scripts
-├── Prefabs/      # Reusable prefabs
-└── Resources/    # Load-on-demand assets
+└── TextMesh Pro/ # TextMesh Pro assets
 Packages/         # Unity package dependencies
 ProjectSettings/  # Unity project configuration
 ```

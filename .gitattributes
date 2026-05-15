@@ -1,2 +1,21 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Unity binary files
+*.unity binary
+*.asset binary
+*.prefab binary
+*.meta binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.psd binary
+*.fbx binary
+*.mp3 binary
+*.wav binary
+*.ogg binary
+
+# Unity YAML files should keep LF
+*.unity text eol=lf
+*.asset text eol=lf
+*.prefab text eol=lf

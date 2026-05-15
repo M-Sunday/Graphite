@@ -1,18 +1,21 @@
 using UnityEditor;
 using UnityEngine;
 
-public class TerminalWindow : EditorWindow
+namespace OpenCode.Editor
 {
-    [MenuItem("Window/General/Terminal", false, 49)]
-    public static void ShowWindow()
+    public class TerminalWindow : EditorWindow
     {
-        var window = GetWindow<TerminalWindow>();
-        window.titleContent = new GUIContent("Terminal");
-        window.Show();
-    }
+        [MenuItem("Window/General/Terminal", false, 49)]
+        public static void ShowWindow()
+        {
+            var window = GetWindow<TerminalWindow>();
+            window.titleContent = new GUIContent("Terminal");
+            window.Show();
+        }
 
-    private void OnGUI()
-    {
-        GUILayout.Label("Terminal", EditorStyles.boldLabel);
+        private void OnGUI()
+        {
+            GUILayout.Label("Terminal", EditorStyles.boldLabel);
+        }
     }
 }

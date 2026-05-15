@@ -7,8 +7,6 @@ A Unity project — terminal emulator and development tools for the Unity Editor
 ```
 Assets/
 ├── Animations/   # Animation controllers and clips
-│   ├── Sprites/  # Sprite frame sequences
-│   └── ...
 ├── Editor/       # Editor scripts and tools
 │   ├── QuickAccessMenu.cs
 │   ├── QuickAccessScenes_Generated.cs

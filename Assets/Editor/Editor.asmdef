@@ -2,7 +2,8 @@
     "name": "OpenCode.Editor",
     "rootNamespace": "OpenCode.Editor",
     "references": [
-        "OpenCode.Runtime"
+        "OpenCode.Runtime",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [
         "Editor"

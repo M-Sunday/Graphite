@@ -50,14 +50,14 @@ namespace Graphite.Dialog
 
             node.responseTextField = new TextField("Text");
             node.responseTextField.multiline = true;
-            node.responseTextField.style.height = 100;
+            node.responseTextField.style.height = 120;
+            node.responseTextField.style.minWidth = 250;
             node.responseTextField.style.whiteSpace = WhiteSpace.Normal;
             node.responseTextField.RegisterValueChangedCallback(evt =>
             {
                 if (evt.newValue != evt.previousValue) graph.isDirty = true;
                 if (node.summaryLabel != null) UpdateSummary(node);
             });
-            node.responseTextField.style.minWidth = 200;
             node.contentContainer.Add(node.responseTextField);
 
             node.contentContainer.Add(DialogGraphView.Spacer(6));

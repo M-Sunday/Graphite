@@ -33,6 +33,7 @@ namespace Graphite.Dialog
 
             dialogNode.AddToClassList("dialog-node");
             dialogNode.titleContainer.style.backgroundColor = new Color(0.2f, 0.6f, 0.2f);
+            dialogNode.titleContainer.style.unityTextAlign = TextAnchor.MiddleCenter;
             dialogNode.style.maxWidth = 300;
             dialogNode.style.minHeight = 200;
 

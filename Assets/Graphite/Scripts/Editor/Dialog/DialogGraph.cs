@@ -28,6 +28,7 @@ namespace Graphite.Dialog
         private Button _saveButton;
         private Button _helpButton;
         private static EditorWindow _helpWindow;
+        private bool _isLoading;
 
         private void OnEnable()
         {
@@ -55,9 +56,11 @@ namespace Graphite.Dialog
         {
             if (target != null && _graphView != null)
             {
+                _isLoading = true;
                 var saveUtility = GraphSaveUtility.GetInstance(_graphView);
                 saveUtility.LoadGraph(target);
                 _graphView.isDirty = false;
+                _isLoading = false;
             }
         }
 
@@ -131,11 +134,14 @@ namespace Graphite.Dialog
 
             if (rootVisualElement.Contains(_noGraphView)) rootVisualElement.Remove(_noGraphView);
 
+            _isLoading = true;
             ConstructGraphView();
             GenerateToolbar();
 
             var saveUtility = GraphSaveUtility.GetInstance(_graphView);
             saveUtility.LoadGraph(target);
+            _graphView.isDirty = false;
+            _isLoading = false;
         }
 
         private void ConstructGraphView()
@@ -195,7 +201,7 @@ namespace Graphite.Dialog
 
             if(_saveButton != null) _saveButton.SetEnabled(_graphView != null && _graphView.isDirty);
 
-            if (_graphView != null && _graphView.isDirty && target != null)
+            if (!_isLoading && _graphView != null && _graphView.isDirty && target != null)
             {
                 Undo.RecordObject(target, "Graph Change");
                 var saveUtility = GraphSaveUtility.GetInstance(_graphView);

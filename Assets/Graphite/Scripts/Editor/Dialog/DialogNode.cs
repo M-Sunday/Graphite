@@ -16,6 +16,7 @@ namespace Graphite.Dialog
     public class DialogNode : DialogNodeBase
     {
         public TextField dialogText;
+        public EnumField characterField;
 
         public ObjectField voiceLine;
 
@@ -33,7 +34,6 @@ namespace Graphite.Dialog
             dialogNode.titleContainer.style.backgroundColor = new Color(0.2f, 0.6f, 0.2f);
             dialogNode.style.flexDirection = FlexDirection.Row;
             dialogNode.style.maxWidth = 300;
-            //dialogNode.style.flexGrow = 1;
 
             var inputPort = DialogGraphView.GeneratePort(dialogNode, Direction.Input, Port.Capacity.Multi);
             inputPort.portName = "Input";
@@ -41,8 +41,14 @@ namespace Graphite.Dialog
 
             dialogNode.mainContainer.Add(DialogGraphView.Spacer(10));
 
-            dialogNode.mainContainer.Add(DialogGraphView.Spacer(10));
+            dialogNode.characterField = new EnumField("Character", CharacterName.Maya);
+            dialogNode.characterField.RegisterValueChangedCallback(evt =>
+            {
+                if (evt.newValue != evt.previousValue) graph.isDirty = true;
+            });
+            dialogNode.mainContainer.Add(dialogNode.characterField);
 
+            dialogNode.mainContainer.Add(DialogGraphView.Spacer(10));
 
             dialogNode.dialogText = new TextField(string.Empty)
             {
@@ -53,7 +59,6 @@ namespace Graphite.Dialog
                 dialogNode.title = GetNodeTitle(evt.newValue);
                 if (evt.newValue != evt.previousValue) graph.isDirty = true;
             });
-            //dialogNode.dialogText.SetValueWithoutNotify(dialogNode.dialogText);
             dialogNode.dialogText.style.whiteSpace = WhiteSpace.Normal;
             dialogNode.mainContainer.Add(dialogNode.dialogText);
 
@@ -159,6 +164,7 @@ namespace Graphite.Dialog
                 ports = SerializePorts(),
                 defaultPort = GetDefaultPort(),
                 dialogText = dialogText.value,
+                character = (CharacterName)characterField.value,
             };
         }
 
@@ -175,6 +181,7 @@ namespace Graphite.Dialog
             }
             d.ports.ForEach(p => { });
             dialogText.value = d.dialogText;
+            characterField.value = d.character;
 
             RefreshPorts();
             RefreshExpandedState();

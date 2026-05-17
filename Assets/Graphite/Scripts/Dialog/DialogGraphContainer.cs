@@ -55,6 +55,7 @@ namespace Graphite.Dialog
     public class SerializedDialogNode : SerializedNode
     {
         public string dialogText;
+        public CharacterName character = CharacterName.Maya;
         public int defaultPort = -1;
     }
 

@@ -30,6 +30,11 @@ public class GraphiteGraphPlayer : MonoBehaviour
         var so = ScriptableObject.CreateInstance<DialogSO>();
         so.actorName = graphContainer.name;
         so.entries = TraverseGraph();
+        if (so.entries.Count == 0)
+        {
+            Debug.LogWarning($"GraphiteGraphPlayer: graph \"{graphContainer.name}\" produced no entries — check ENTRYPOINT connections", graphContainer);
+            return;
+        }
         sys.StartDialog(so);
     }
 
@@ -80,7 +85,7 @@ public class GraphiteGraphPlayer : MonoBehaviour
 
                 var entry = new DialogEntry
                 {
-                    character = CharacterName.Maya,
+                    character = dialogNode.character,
                     dialogText = dialogNode.dialogText,
                     hasOptions = options.Count > 0,
                     options = options,
@@ -157,7 +162,7 @@ public class GraphiteGraphPlayer : MonoBehaviour
 
                     entries.Add(new DialogEntry
                     {
-                        character = CharacterName.Maya,
+                        character = dialogNode.character,
                         dialogText = dialogNode.dialogText,
                         hasOptions = true,
                         options = subOptions,
@@ -169,7 +174,7 @@ public class GraphiteGraphPlayer : MonoBehaviour
 
                 entries.Add(new DialogEntry
                 {
-                    character = CharacterName.Maya,
+                    character = dialogNode.character,
                     dialogText = dialogNode.dialogText,
                     hasOptions = false,
                     options = new List<DialogOption>(),
@@ -203,6 +208,8 @@ public class GraphiteGraphPlayer : MonoBehaviour
             var node = graphContainer.nodeData.FirstOrDefault(n => n.GUID == link.targetNodeGuid);
             if (node is SerializedOptionNode opt)
                 results.Add(opt);
+            else if (node != null)
+                Debug.LogWarning($"GraphiteGraphPlayer: port \"{link.portName}\" on node \"{baseGuid}\" connects to {node.GetType().Name} instead of OptionNode", graphContainer);
         }
         return results;
     }

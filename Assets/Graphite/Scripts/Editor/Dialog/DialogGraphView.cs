@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace PQHD.Dialog
+namespace Graphite.Dialog
 {
     // ===============================================================
     // Dialog Graph editor using unity's GraphView

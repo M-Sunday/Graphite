@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using PQHD.Dialog;
+using Graphite.Dialog;
 
-public class PQHDGraphPlayer : MonoBehaviour
+public class GraphiteGraphPlayer : MonoBehaviour
 {
     public DialogGraphContainer graphContainer;
 
@@ -11,14 +11,14 @@ public class PQHDGraphPlayer : MonoBehaviour
     {
         if (graphContainer == null)
         {
-            Debug.LogError("PQHDGraphPlayer: no DialogGraphContainer assigned!", this);
+            Debug.LogError("GraphiteGraphPlayer: no DialogGraphContainer assigned!", this);
             return;
         }
 
         var sys = DialogSystem.Instance;
         if (sys == null)
         {
-            Debug.LogError("PQHDGraphPlayer: no DialogSystem found in scene!", this);
+            Debug.LogError("GraphiteGraphPlayer: no DialogSystem found in scene!", this);
             return;
         }
 

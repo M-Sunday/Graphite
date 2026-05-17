@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 using System.Linq;
 using System;
 
-namespace PQHD.Dialog
+namespace Graphite.Dialog
 {
     // ===============================================================
     // Class to serialize the data in a dialog graph

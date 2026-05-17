@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 
-namespace PQHD.Dialog
+namespace Graphite.Dialog
 {
     public class DialogGraph : EditorWindow
     {

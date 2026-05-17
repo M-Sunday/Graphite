@@ -1253,7 +1253,7 @@ GameObject:
   - component: {fileID: 2140874065}
   - component: {fileID: 2140874066}
   m_Layer: 0
-  m_Name: PQHDGraphPlayer
+  m_Name: GraphiteGraphPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

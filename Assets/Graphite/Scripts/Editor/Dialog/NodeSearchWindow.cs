@@ -6,7 +6,7 @@ using UnityEditor.Experimental;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
 
-namespace PQHD.Dialog
+namespace Graphite.Dialog
 {
     // ===============================================================
     // Node search window for dialog graphs

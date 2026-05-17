@@ -4,7 +4,7 @@ using UnityEditor.UIElements;
 using UnityEditor.Experimental.GraphView;
 using System.Linq;
 
-namespace PQHD.Dialog
+namespace Graphite.Dialog
 {
     public class ResponseNode : DialogNodeBase
     {

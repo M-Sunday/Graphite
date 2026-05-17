@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 using System.Linq;
 using System;
 
-namespace PQHD.Dialog
+namespace Graphite.Dialog
 {
     // ===============================================================
     // Dialog node using unity's graphview

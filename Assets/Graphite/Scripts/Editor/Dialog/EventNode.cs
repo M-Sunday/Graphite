@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 using System.Linq;
 
-namespace PQHD.Dialog
+namespace Graphite.Dialog
 {
     // ===============================================================
     // Node that triggers an event instantaneously

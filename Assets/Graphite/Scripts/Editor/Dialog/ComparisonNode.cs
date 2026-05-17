@@ -7,7 +7,7 @@ using UnityEditor.Experimental.GraphView;
 using System.Linq;
 using System.Reflection;
 
-namespace PQHD.Dialog
+namespace Graphite.Dialog
 {
     // ===============================================================
     // Checks the value of a property

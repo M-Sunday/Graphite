@@ -5,13 +5,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace PQHD.Dialog
+namespace Graphite.Dialog
 {
     // ===============================================================
     // Container for a dialoggraph asset
     // ===============================================================
     [System.Serializable]
-    [CreateAssetMenu(fileName = "New Dialog Graph", menuName = "PQHD/Dialog Window", order = 0)]
+    [CreateAssetMenu(fileName = "New Dialog Graph", menuName = "Graphite/Dialog Window", order = 0)]
     public class DialogGraphContainer : ScriptableObject
     {
         public List<NodeLinkData> nodeLinks = new List<NodeLinkData>();

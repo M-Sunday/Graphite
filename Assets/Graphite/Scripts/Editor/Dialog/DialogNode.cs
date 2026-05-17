@@ -33,8 +33,8 @@ namespace Graphite.Dialog
 
             dialogNode.AddToClassList("dialog-node");
             dialogNode.titleContainer.style.backgroundColor = new Color(0.2f, 0.6f, 0.2f);
-            dialogNode.style.flexDirection = FlexDirection.Row;
             dialogNode.style.maxWidth = 300;
+            dialogNode.style.minHeight = 200;
 
             var inputPort = DialogGraphView.GeneratePort(dialogNode, Direction.Input, Port.Capacity.Multi);
             inputPort.portName = "Input";
@@ -60,6 +60,8 @@ namespace Graphite.Dialog
                 if (evt.newValue != evt.previousValue) graph.isDirty = true;
             });
             dialogNode.dialogText.style.whiteSpace = WhiteSpace.Normal;
+            dialogNode.dialogText.style.height = 120;
+            dialogNode.dialogText.style.minWidth = 250;
             dialogNode.mainContainer.Add(dialogNode.dialogText);
 
             dialogNode.mainContainer.Add(DialogGraphView.Spacer(10));

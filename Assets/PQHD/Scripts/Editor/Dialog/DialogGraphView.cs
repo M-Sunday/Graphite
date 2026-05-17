@@ -359,9 +359,6 @@ namespace PQHD.Dialog
             {
                 // add default port when all choices removed
                 AddDefaultPort(node, this);
-
-                if (node is DialogNode dn)
-                    dn.titleContainer.style.backgroundColor = new Color(0.2f, 0.6f, 0.2f);
             }
 
             node.RefreshPorts();

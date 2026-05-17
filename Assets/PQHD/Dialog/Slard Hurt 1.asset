@@ -38,20 +38,20 @@ MonoBehaviour:
     portName: Choice 2
     targetNodeGuid: a36f6338-0363-4512-bb32-3135e9e843c3
   nodeData:
-  - rid: 6785856306322079818
-  - rid: 6785856306322079819
-  - rid: 6785856306322079820
-  - rid: 6785856306322079821
-  - rid: 6785856306322079822
-  - rid: 6785856306322079823
-  - rid: 6785856306322079824
-  - rid: 6785856306322079825
-  - rid: 6785856306322079826
+  - rid: 6785856305037050774
+  - rid: 6785856305037050775
+  - rid: 6785856305037050776
+  - rid: 6785856305037050777
+  - rid: 6785856305037050778
+  - rid: 6785856305037050779
+  - rid: 6785856305037050780
+  - rid: 6785856305037050781
+  - rid: 6785856305037050782
   exposedProperties: []
   references:
     version: 2
     RefIds:
-    - rid: 6785856306322079818
+    - rid: 6785856305037050774
       type: {class: SerializedNode, ns: PQHD.Dialog, asm: Assembly-CSharp}
       data:
         GUID: ENTRYPOINT
@@ -59,7 +59,7 @@ MonoBehaviour:
         - portName: DEFAULT
           retriggerEnabled: 1
         position: {x: 0, y: 0}
-    - rid: 6785856306322079819
+    - rid: 6785856305037050775
       type: {class: SerializedOptionNode, ns: PQHD.Dialog, asm: Assembly-CSharp}
       data:
         GUID: a36f6338-0363-4512-bb32-3135e9e843c3
@@ -68,7 +68,7 @@ MonoBehaviour:
           retriggerEnabled: 1
         position: {x: 592.8, y: 199.2}
         optionText: yy
-    - rid: 6785856306322079820
+    - rid: 6785856305037050776
       type: {class: SerializedOptionNode, ns: PQHD.Dialog, asm: Assembly-CSharp}
       data:
         GUID: c0bdf5c8-ecd4-4e27-a678-307160a1027b
@@ -77,7 +77,7 @@ MonoBehaviour:
           retriggerEnabled: 1
         position: {x: 592.8, y: 80}
         optionText: nn
-    - rid: 6785856306322079821
+    - rid: 6785856305037050777
       type: {class: SerializedResponseNode, ns: PQHD.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 5047d361-cd6c-4fd9-82e9-e6f11ff33dbf
@@ -87,13 +87,13 @@ MonoBehaviour:
         position: {x: 875.2, y: 203.2}
         responseText: NOT SAMW
         character: 0
-    - rid: 6785856306322079822
+    - rid: 6785856305037050778
       type: {class: SerializedExitNode, ns: PQHD.Dialog, asm: Assembly-CSharp}
       data:
         GUID: e559df1d-423a-4565-b939-5ed29c62d62b
         ports: []
-        position: {x: 1126.3999, y: 213.6}
-    - rid: 6785856306322079823
+        position: {x: 1126.4, y: 213.59999}
+    - rid: 6785856305037050779
       type: {class: SerializedDialogNode, ns: PQHD.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 15f22188-772c-4c62-abea-88e657b781b5
@@ -103,17 +103,17 @@ MonoBehaviour:
         position: {x: 1155.2, y: -52}
         dialogText: Dialog Node1
         defaultPort: -1
-    - rid: 6785856306322079824
+    - rid: 6785856305037050780
       type: {class: SerializedResponseNode, ns: PQHD.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 67fee480-ff27-4d60-a17e-6eeec73ef8e3
         ports:
         - portName: DEFAULT
           retriggerEnabled: 1
-        position: {x: 881.60004, y: -48}
+        position: {x: 881.6, y: -48}
         responseText: same
         character: 0
-    - rid: 6785856306322079825
+    - rid: 6785856305037050781
       type: {class: SerializedDialogNode, ns: PQHD.Dialog, asm: Assembly-CSharp}
       data:
         GUID: d62b8019-aae2-4595-997d-847b1f0ec2f4
@@ -123,13 +123,13 @@ MonoBehaviour:
         position: {x: 226.4, y: 191.2}
         dialogText: hey hey hey dialog
         defaultPort: -1
-    - rid: 6785856306322079826
+    - rid: 6785856305037050782
       type: {class: SerializedDialogNode, ns: PQHD.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 957a96c9-5114-48c0-8bff-187191cd4676
         ports:
         - portName: DEFAULT
           retriggerEnabled: 1
-        position: {x: 1585.6, y: -74.4}
+        position: {x: 1505.6, y: -48.8}
         dialogText: Dialog Node2
         defaultPort: -1

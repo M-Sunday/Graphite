@@ -24,7 +24,6 @@ namespace PQHD.Dialog
         {
             var dialogNode = new DialogNode()
             {
-                title = "Dialog",
                 GUID = System.Guid.NewGuid().ToString(),
             };
 
@@ -91,8 +90,6 @@ namespace PQHD.Dialog
                 }
                 dialogNode.outputContainer.Remove(defaultPort);
                 graph.RemoveElement(defaultPort);
-
-                dialogNode.titleContainer.style.backgroundColor = new Color(0.9f, 0.5f, 0.1f);
             }
 
             AddRetriggerToggle(generatedPort.contentContainer, retriggerEnabled);

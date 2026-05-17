@@ -66,7 +66,9 @@ namespace Graphite.Dialog
                 return;
             }
 
-            contentViewContainer.transform.position += evt.delta;
+            var delta = evt.delta;
+            delta.x = -delta.x;
+            contentViewContainer.transform.position += delta;
             evt.StopPropagation();
         }
 

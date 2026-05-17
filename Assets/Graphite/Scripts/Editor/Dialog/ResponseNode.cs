@@ -51,7 +51,7 @@ namespace Graphite.Dialog
             node.responseTextField = new TextField("Text");
             node.responseTextField.multiline = true;
             node.responseTextField.style.height = 120;
-            node.responseTextField.style.minWidth = 250;
+            node.responseTextField.style.minWidth = 450;
             node.responseTextField.style.whiteSpace = WhiteSpace.Normal;
             node.responseTextField.RegisterValueChangedCallback(evt =>
             {

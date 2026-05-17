@@ -82,6 +82,14 @@ namespace Graphite.Dialog
                 Undo.PerformRedo();
                 evt.StopPropagation();
             }
+            else if (ctrl && evt.keyCode == KeyCode.A)
+            {
+                if (_graphView == null) return;
+                _graphView.ClearSelection();
+                foreach (var node in _graphView.nodes.ToList())
+                    _graphView.AddToSelection(node);
+                evt.StopPropagation();
+            }
         }
 
         void GenerateDialogGraphSelector()

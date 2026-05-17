@@ -33,9 +33,9 @@ namespace Graphite.Dialog
         {
             _editorWindow = editorWindow;
             styleSheets.Add(Resources.Load<StyleSheet>("DialogGraph"));
-            SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 
             this.AddManipulator(new ContentDragger());
+            this.RegisterCallback<WheelEvent>(OnScrollWheel, TrickleDown.TrickleDown);
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
@@ -52,6 +52,22 @@ namespace Graphite.Dialog
             serializeGraphElements = Copy;
             canPasteSerializedData = CanPaste;
             unserializeAndPaste = Paste;
+        }
+
+        private void OnScrollWheel(WheelEvent evt)
+        {
+            if (evt.ctrlKey || evt.commandKey)
+            {
+                if (evt.delta.y > 0)
+                    contentViewContainer.transform.scale *= 1.05f;
+                else
+                    contentViewContainer.transform.scale *= 0.95f;
+                evt.StopPropagation();
+                return;
+            }
+
+            contentViewContainer.transform.position += evt.delta;
+            evt.StopPropagation();
         }
 
         private void AddSearchWindow(EditorWindow editorWindow)

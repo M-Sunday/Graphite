@@ -167,10 +167,22 @@ namespace Graphite.Dialog
 
             _toolbar.Add(new ToolbarSpacer());
 
+            var bbToggle = new Button(() => ToggleBlackboard()) { text = "Blackboard" };
+            _toolbar.Add(bbToggle);
+
+            _toolbar.Add(new ToolbarSpacer());
+
             _helpButton = new Button(()=> OpenHelpWindow()) { text = "?" };
             _toolbar.Add(_helpButton);
 
             rootVisualElement.Add(_toolbar);
+        }
+
+        private void ToggleBlackboard()
+        {
+            if (_graphView == null || _graphView.blackboard == null) return;
+            _graphView.blackboard.style.display = _graphView.blackboard.style.display == DisplayStyle.None
+                ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         private void OnGUI()
@@ -221,6 +233,7 @@ namespace Graphite.Dialog
             };
 
             blackboard.SetPosition(new Rect(10, 30, 200, 300));
+            blackboard.style.display = DisplayStyle.None;
 
             _graphView.Add(blackboard);
             _graphView.blackboard = blackboard;

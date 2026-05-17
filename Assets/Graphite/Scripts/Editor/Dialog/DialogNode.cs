@@ -26,6 +26,7 @@ namespace Graphite.Dialog
             var dialogNode = new DialogNode()
             {
                 GUID = System.Guid.NewGuid().ToString(),
+                title = "Dialog",
             };
 
             dialogNode.tooltip = "Plays dialog";
@@ -56,7 +57,6 @@ namespace Graphite.Dialog
             };
             dialogNode.dialogText.RegisterValueChangedCallback(evt =>
             {
-                dialogNode.title = GetNodeTitle(evt.newValue);
                 if (evt.newValue != evt.previousValue) graph.isDirty = true;
             });
             dialogNode.dialogText.style.whiteSpace = WhiteSpace.Normal;

@@ -334,6 +334,48 @@ namespace Graphite.Dialog
                 SetupPortDragTracking(generatedPort, graph);
         }
 
+        public void ToggleCollapseAll()
+        {
+            var anyExpanded = false;
+            foreach (var node in nodes.ToList())
+            {
+                if (node is DialogNode dn) { if (dn.expanded) anyExpanded = true; }
+                else if (node is ResponseNode rn) { if (rn.expanded) anyExpanded = true; }
+                else if (node is OptionNode on) { if (on.expanded) anyExpanded = true; }
+            }
+            foreach (var node in nodes.ToList())
+            {
+                if (node is DialogNode dn)
+                {
+                    dn.expanded = !anyExpanded;
+                    dn.contentContainer.style.display = dn.expanded ? DisplayStyle.Flex : DisplayStyle.None;
+                    dn.summaryLabel.style.display = dn.expanded ? DisplayStyle.None : DisplayStyle.Flex;
+                    if (!dn.expanded) DialogNode.UpdateSummary(dn);
+                    dn.collapseButton.text = dn.expanded ? "▼" : "►";
+                    dn.RefreshExpandedState();
+                }
+                else if (node is ResponseNode rn)
+                {
+                    rn.expanded = !anyExpanded;
+                    rn.contentContainer.style.display = rn.expanded ? DisplayStyle.Flex : DisplayStyle.None;
+                    rn.summaryLabel.style.display = rn.expanded ? DisplayStyle.None : DisplayStyle.Flex;
+                    if (!rn.expanded) ResponseNode.UpdateSummary(rn);
+                    rn.collapseButton.text = rn.expanded ? "▼" : "►";
+                    rn.RefreshExpandedState();
+                }
+                else if (node is OptionNode on)
+                {
+                    on.expanded = !anyExpanded;
+                    on.contentContainer.style.display = on.expanded ? DisplayStyle.Flex : DisplayStyle.None;
+                    on.summaryLabel.style.display = on.expanded ? DisplayStyle.None : DisplayStyle.Flex;
+                    if (!on.expanded) OptionNode.UpdateSummary(on);
+                    on.collapseButton.text = on.expanded ? "▼" : "►";
+                    on.RefreshExpandedState();
+                }
+            }
+            isDirty = true;
+        }
+
         public void ResetPorts(Node node)
         {
             var ports = node.outputContainer.Children().ToList();

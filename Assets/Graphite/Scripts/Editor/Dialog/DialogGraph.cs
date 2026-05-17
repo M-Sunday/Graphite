@@ -151,6 +151,14 @@ namespace Graphite.Dialog
 
             _toolbar.Add(new ToolbarSpacer());
 
+            var collapseAllButton = new Button(() =>
+            {
+                if (_graphView != null) _graphView.ToggleCollapseAll();
+            }) { text = "Collapse All" };
+            _toolbar.Add(collapseAllButton);
+
+            _toolbar.Add(new ToolbarSpacer());
+
             _helpButton = new Button(()=> OpenHelpWindow()) { text = "?" };
             _toolbar.Add(_helpButton);
 

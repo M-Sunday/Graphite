@@ -17,6 +17,10 @@ namespace Graphite.Dialog
     {
         public TextField dialogText;
         public EnumField characterField;
+        public VisualElement contentContainer;
+        public Button collapseButton;
+        public bool expanded = true;
+        public Label summaryLabel;
 
         public ObjectField voiceLine;
 
@@ -34,23 +38,27 @@ namespace Graphite.Dialog
             dialogNode.AddToClassList("dialog-node");
             dialogNode.titleContainer.style.backgroundColor = new Color(0.2f, 0.6f, 0.2f);
             dialogNode.titleContainer.style.unityTextAlign = TextAnchor.MiddleCenter;
-            dialogNode.style.maxWidth = 500;
+            dialogNode.style.maxWidth = 600;
             dialogNode.style.minHeight = 200;
+
+            AddCollapseButton(dialogNode);
 
             var inputPort = DialogGraphView.GeneratePort(dialogNode, Direction.Input, Port.Capacity.Multi);
             inputPort.portName = "Input";
             dialogNode.inputContainer.Add(inputPort);
 
-            dialogNode.mainContainer.Add(DialogGraphView.Spacer(10));
+            dialogNode.contentContainer = new VisualElement();
+            dialogNode.contentContainer.Add(DialogGraphView.Spacer(10));
 
             dialogNode.characterField = new EnumField("Character", CharacterName.Maya);
             dialogNode.characterField.RegisterValueChangedCallback(evt =>
             {
                 if (evt.newValue != evt.previousValue) graph.isDirty = true;
+                if (dialogNode.summaryLabel != null) UpdateSummary(dialogNode);
             });
-            dialogNode.mainContainer.Add(dialogNode.characterField);
+            dialogNode.contentContainer.Add(dialogNode.characterField);
 
-            dialogNode.mainContainer.Add(DialogGraphView.Spacer(10));
+            dialogNode.contentContainer.Add(DialogGraphView.Spacer(10));
 
             dialogNode.dialogText = new TextField(string.Empty)
             {
@@ -59,17 +67,34 @@ namespace Graphite.Dialog
             dialogNode.dialogText.RegisterValueChangedCallback(evt =>
             {
                 if (evt.newValue != evt.previousValue) graph.isDirty = true;
+                if (dialogNode.summaryLabel != null) UpdateSummary(dialogNode);
             });
             dialogNode.dialogText.style.whiteSpace = WhiteSpace.Normal;
             dialogNode.dialogText.style.height = 120;
-            dialogNode.dialogText.style.minWidth = 450;
-            dialogNode.mainContainer.Add(dialogNode.dialogText);
+            dialogNode.dialogText.style.minWidth = 550;
+            dialogNode.contentContainer.Add(dialogNode.dialogText);
 
-            dialogNode.mainContainer.Add(DialogGraphView.Spacer(10));
+            dialogNode.contentContainer.Add(DialogGraphView.Spacer(10));
 
             var addOptionsButton = new Button(() => graph.CreateOptionPair(dialogNode)) { text = "Add Options" };
             addOptionsButton.style.width = 100;
-            dialogNode.mainContainer.Add(addOptionsButton);
+            dialogNode.contentContainer.Add(addOptionsButton);
+
+            dialogNode.mainContainer.Add(dialogNode.contentContainer);
+
+            dialogNode.summaryLabel = new Label("");
+            dialogNode.summaryLabel.style.color = Color.gray;
+            dialogNode.summaryLabel.style.whiteSpace = WhiteSpace.Normal;
+            dialogNode.summaryLabel.style.paddingLeft = 5;
+            dialogNode.summaryLabel.style.paddingRight = 5;
+            dialogNode.summaryLabel.style.paddingTop = 3;
+            dialogNode.summaryLabel.style.paddingBottom = 3;
+            dialogNode.summaryLabel.style.marginTop = 5;
+            dialogNode.summaryLabel.style.marginBottom = 5;
+            dialogNode.summaryLabel.style.backgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.3f);
+            dialogNode.summaryLabel.style.unityFontStyleAndWeight = FontStyle.Italic;
+            dialogNode.summaryLabel.style.display = DisplayStyle.None;
+            dialogNode.mainContainer.Add(dialogNode.summaryLabel);
 
             DialogGraphView.AddDefaultPort(dialogNode, graph);
 
@@ -78,6 +103,37 @@ namespace Graphite.Dialog
             dialogNode.SetPosition(new Rect(position, graph.defaultNodeSize));
 
             return dialogNode;
+        }
+
+        static void AddCollapseButton(DialogNode node)
+        {
+            node.collapseButton = new Button(() =>
+            {
+                node.expanded = !node.expanded;
+                node.contentContainer.style.display = node.expanded ? DisplayStyle.Flex : DisplayStyle.None;
+                node.summaryLabel.style.display = node.expanded ? DisplayStyle.None : DisplayStyle.Flex;
+                if (!node.expanded) UpdateSummary(node);
+                node.collapseButton.text = node.expanded ? "▼" : "►";
+                node.RefreshExpandedState();
+            });
+            node.collapseButton.text = "▼";
+            node.collapseButton.tooltip = "Collapse/Expand node";
+            node.collapseButton.style.width = 20;
+            node.collapseButton.style.height = 20;
+            node.collapseButton.style.marginLeft = 5;
+            node.titleContainer.Insert(0, node.collapseButton);
+        }
+
+        public static void UpdateSummary(DialogNode node)
+        {
+            string text = node.dialogText.value;
+            string charName = node.characterField.value.ToString();
+            if (string.IsNullOrEmpty(text))
+                node.summaryLabel.text = $"[{charName}] [Empty]";
+            else if (text.Length > 50)
+                node.summaryLabel.text = $"[{charName}] {text.Substring(0, 47)}...";
+            else
+                node.summaryLabel.text = $"[{charName}] {text}";
         }
 
 

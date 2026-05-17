@@ -51,7 +51,7 @@ namespace Graphite.Dialog
             node.responseTextField = new TextField("Text");
             node.responseTextField.multiline = true;
             node.responseTextField.style.height = 120;
-            node.responseTextField.style.minWidth = 450;
+            node.responseTextField.style.minWidth = 600;
             node.responseTextField.style.whiteSpace = WhiteSpace.Normal;
             node.responseTextField.RegisterValueChangedCallback(evt =>
             {
@@ -104,7 +104,7 @@ namespace Graphite.Dialog
             node.titleContainer.Insert(0, node.collapseButton);
         }
 
-        static void UpdateSummary(ResponseNode node)
+        public static void UpdateSummary(ResponseNode node)
         {
             string text = node.responseTextField.value;
             string charName = node.characterField.value.ToString();

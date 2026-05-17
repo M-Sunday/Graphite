@@ -45,7 +45,7 @@ namespace Graphite.Dialog
                 if (node.summaryLabel != null) UpdateSummary(node);
             });
             node.optionTextField.style.height = 60;
-            node.optionTextField.style.minWidth = 450;
+            node.optionTextField.style.minWidth = 500;
             node.contentContainer.Add(node.optionTextField);
 
             node.contentContainer.Add(DialogGraphView.Spacer(6));
@@ -92,7 +92,7 @@ namespace Graphite.Dialog
             node.titleContainer.Insert(0, node.collapseButton);
         }
 
-        static void UpdateSummary(OptionNode node)
+        public static void UpdateSummary(OptionNode node)
         {
             string text = node.optionTextField.value;
             if (string.IsNullOrEmpty(text))

@@ -126,6 +126,47 @@ public class GraphiteGraphPlayer : MonoBehaviour
 
             if (nodeData is SerializedDialogNode dialogNode)
             {
+                var subOptionNodes = FindConnectedOptionNodes(dialogNode.GUID);
+                var hasSubOptions = subOptionNodes.Count > 0;
+
+                if (hasSubOptions)
+                {
+                    var subOptions = subOptionNodes.Select(o =>
+                    {
+                        var responseGuid = GetConnectedNode(o.GUID, "DEFAULT");
+                        var dialogs = new List<DialogEntry>();
+                        if (responseGuid != null)
+                        {
+                            var responseNode = graphContainer.nodeData.FirstOrDefault(n => n.GUID == responseGuid) as SerializedResponseNode;
+                            if (responseNode != null)
+                            {
+                                dialogs.Add(new DialogEntry
+                                {
+                                    character = responseNode.character,
+                                    dialogText = responseNode.responseText,
+                                });
+                            }
+                            dialogs.AddRange(TraverseSubGraph(responseGuid));
+                        }
+                        return new DialogOption
+                        {
+                            optionText = o.optionText,
+                            responseDialogs = dialogs,
+                        };
+                    }).ToList();
+
+                    entries.Add(new DialogEntry
+                    {
+                        character = CharacterName.Maya,
+                        dialogText = dialogNode.dialogText,
+                        hasOptions = true,
+                        options = subOptions,
+                        customWaveColor = Color.white,
+                        customAlertColor = Color.white,
+                    });
+                    break;
+                }
+
                 entries.Add(new DialogEntry
                 {
                     character = CharacterName.Maya,

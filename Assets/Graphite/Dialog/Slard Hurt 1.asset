@@ -16,6 +16,12 @@ MonoBehaviour:
   - baseNodeGuid: ENTRYPOINT
     portName: DEFAULT
     targetNodeGuid: d62b8019-aae2-4595-997d-847b1f0ec2f4
+  - baseNodeGuid: d62b8019-aae2-4595-997d-847b1f0ec2f4
+    portName: Choice 2
+    targetNodeGuid: c0bdf5c8-ecd4-4e27-a678-307160a1027b
+  - baseNodeGuid: d62b8019-aae2-4595-997d-847b1f0ec2f4
+    portName: Choice 2
+    targetNodeGuid: a36f6338-0363-4512-bb32-3135e9e843c3
   - baseNodeGuid: a36f6338-0363-4512-bb32-3135e9e843c3
     portName: DEFAULT
     targetNodeGuid: 5047d361-cd6c-4fd9-82e9-e6f11ff33dbf
@@ -25,37 +31,54 @@ MonoBehaviour:
   - baseNodeGuid: 5047d361-cd6c-4fd9-82e9-e6f11ff33dbf
     portName: DEFAULT
     targetNodeGuid: e559df1d-423a-4565-b939-5ed29c62d62b
-  - baseNodeGuid: 15f22188-772c-4c62-abea-88e657b781b5
-    portName: DEFAULT
-    targetNodeGuid: 957a96c9-5114-48c0-8bff-187191cd4676
   - baseNodeGuid: 67fee480-ff27-4d60-a17e-6eeec73ef8e3
     portName: DEFAULT
     targetNodeGuid: 15f22188-772c-4c62-abea-88e657b781b5
-  - baseNodeGuid: d62b8019-aae2-4595-997d-847b1f0ec2f4
+  - baseNodeGuid: d481a118-9347-4ccd-8bbc-03259cbafa8c
     portName: Choice 2
-    targetNodeGuid: c0bdf5c8-ecd4-4e27-a678-307160a1027b
-  - baseNodeGuid: d62b8019-aae2-4595-997d-847b1f0ec2f4
+    targetNodeGuid: 9427a0ad-6209-4850-89f3-b8bd7f14ccfd
+  - baseNodeGuid: d481a118-9347-4ccd-8bbc-03259cbafa8c
     portName: Choice 2
-    targetNodeGuid: a36f6338-0363-4512-bb32-3135e9e843c3
-  - baseNodeGuid: 957a96c9-5114-48c0-8bff-187191cd4676
+    targetNodeGuid: 5df0d4bc-b180-4d69-8d66-1d23f9866e33
+  - baseNodeGuid: 5df0d4bc-b180-4d69-8d66-1d23f9866e33
+    portName: DEFAULT
+    targetNodeGuid: 127fb54c-c4e6-4fa0-8434-04421a6c6882
+  - baseNodeGuid: 9427a0ad-6209-4850-89f3-b8bd7f14ccfd
+    portName: DEFAULT
+    targetNodeGuid: fdc79038-33d1-4622-89a7-04ed5cb393a4
+  - baseNodeGuid: 15f22188-772c-4c62-abea-88e657b781b5
+    portName: DEFAULT
+    targetNodeGuid: d481a118-9347-4ccd-8bbc-03259cbafa8c
+  - baseNodeGuid: fdc79038-33d1-4622-89a7-04ed5cb393a4
+    portName: DEFAULT
+    targetNodeGuid: 8e89789f-1b45-404e-ba19-ef088998598e
+  - baseNodeGuid: 127fb54c-c4e6-4fa0-8434-04421a6c6882
+    portName: DEFAULT
+    targetNodeGuid: 8e89789f-1b45-404e-ba19-ef088998598e
+  - baseNodeGuid: 8e89789f-1b45-404e-ba19-ef088998598e
     portName: Choice 0
-    targetNodeGuid: db8c6076-23b7-420e-8e86-be14b7f9ae80
+    targetNodeGuid: dadedcef-e970-4f9c-bfd3-a677a241d5fc
   nodeData:
-  - rid: 6785856306322080112
-  - rid: 6785856306322080113
-  - rid: 6785856306322080114
-  - rid: 6785856306322080115
-  - rid: 6785856306322080116
-  - rid: 6785856306322080117
-  - rid: 6785856306322080118
-  - rid: 6785856306322080119
-  - rid: 6785856306322080120
-  - rid: 6785856306322080121
+  - rid: 6785856306322080677
+  - rid: 6785856306322080678
+  - rid: 6785856306322080679
+  - rid: 6785856306322080680
+  - rid: 6785856306322080681
+  - rid: 6785856306322080682
+  - rid: 6785856306322080683
+  - rid: 6785856306322080684
+  - rid: 6785856306322080685
+  - rid: 6785856306322080686
+  - rid: 6785856306322080687
+  - rid: 6785856306322080688
+  - rid: 6785856306322080689
+  - rid: 6785856306322080690
+  - rid: 6785856306322080691
   exposedProperties: []
   references:
     version: 2
     RefIds:
-    - rid: 6785856306322080112
+    - rid: 6785856306322080677
       type: {class: SerializedNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: ENTRYPOINT
@@ -63,41 +86,13 @@ MonoBehaviour:
         - portName: DEFAULT
           retriggerEnabled: 1
         position: {x: 0, y: 0}
-    - rid: 6785856306322080113
-      type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
-      data:
-        GUID: a36f6338-0363-4512-bb32-3135e9e843c3
-        ports:
-        - portName: DEFAULT
-          retriggerEnabled: 1
-        position: {x: 592.8, y: 199.2}
-        optionText: yy
-    - rid: 6785856306322080114
-      type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
-      data:
-        GUID: c0bdf5c8-ecd4-4e27-a678-307160a1027b
-        ports:
-        - portName: DEFAULT
-          retriggerEnabled: 1
-        position: {x: 592.8, y: 80}
-        optionText: nn
-    - rid: 6785856306322080115
-      type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
-      data:
-        GUID: 5047d361-cd6c-4fd9-82e9-e6f11ff33dbf
-        ports:
-        - portName: DEFAULT
-          retriggerEnabled: 1
-        position: {x: 875.2, y: 203.2}
-        responseText: NOT SAMW
-        character: 0
-    - rid: 6785856306322080116
+    - rid: 6785856306322080678
       type: {class: SerializedExitNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: e559df1d-423a-4565-b939-5ed29c62d62b
         ports: []
         position: {x: 1126.4, y: 213.6}
-    - rid: 6785856306322080117
+    - rid: 6785856306322080679
       type: {class: SerializedDialogNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 15f22188-772c-4c62-abea-88e657b781b5
@@ -107,17 +102,7 @@ MonoBehaviour:
         position: {x: 1155.2, y: -52}
         dialogText: Dialog Node1
         defaultPort: -1
-    - rid: 6785856306322080118
-      type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
-      data:
-        GUID: 67fee480-ff27-4d60-a17e-6eeec73ef8e3
-        ports:
-        - portName: DEFAULT
-          retriggerEnabled: 1
-        position: {x: 881.6, y: -48}
-        responseText: same
-        character: 0
-    - rid: 6785856306322080119
+    - rid: 6785856306322080680
       type: {class: SerializedDialogNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: d62b8019-aae2-4595-997d-847b1f0ec2f4
@@ -127,19 +112,105 @@ MonoBehaviour:
         position: {x: 226.4, y: 191.2}
         dialogText: hey hey hey dialog
         defaultPort: -1
-    - rid: 6785856306322080120
+    - rid: 6785856306322080681
+      type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
+      data:
+        GUID: a36f6338-0363-4512-bb32-3135e9e843c3
+        ports:
+        - portName: DEFAULT
+          retriggerEnabled: 1
+        position: {x: 592.8, y: 199.2}
+        optionText: yy
+    - rid: 6785856306322080682
+      type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
+      data:
+        GUID: c0bdf5c8-ecd4-4e27-a678-307160a1027b
+        ports:
+        - portName: DEFAULT
+          retriggerEnabled: 1
+        position: {x: 592.8, y: 80}
+        optionText: nn
+    - rid: 6785856306322080683
+      type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
+      data:
+        GUID: 5047d361-cd6c-4fd9-82e9-e6f11ff33dbf
+        ports:
+        - portName: DEFAULT
+          retriggerEnabled: 1
+        position: {x: 875.2, y: 203.2}
+        responseText: NOT SAMW
+        character: 0
+    - rid: 6785856306322080684
+      type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
+      data:
+        GUID: 67fee480-ff27-4d60-a17e-6eeec73ef8e3
+        ports:
+        - portName: DEFAULT
+          retriggerEnabled: 1
+        position: {x: 881.6, y: -48}
+        responseText: same
+        character: 0
+    - rid: 6785856306322080685
       type: {class: SerializedDialogNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
-        GUID: 957a96c9-5114-48c0-8bff-187191cd4676
+        GUID: d481a118-9347-4ccd-8bbc-03259cbafa8c
+        ports:
+        - portName: Choice 2
+          retriggerEnabled: 1
+        position: {x: 1484, y: -47.2}
+        dialogText: hey hey hey dialog
+        defaultPort: -1
+    - rid: 6785856306322080686
+      type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
+      data:
+        GUID: 5df0d4bc-b180-4d69-8d66-1d23f9866e33
+        ports:
+        - portName: DEFAULT
+          retriggerEnabled: 1
+        position: {x: 1884.8, y: 33.6}
+        optionText: yey
+    - rid: 6785856306322080687
+      type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
+      data:
+        GUID: 9427a0ad-6209-4850-89f3-b8bd7f14ccfd
+        ports:
+        - portName: DEFAULT
+          retriggerEnabled: 1
+        position: {x: 1888.8, y: -120.8}
+        optionText: non
+    - rid: 6785856306322080688
+      type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
+      data:
+        GUID: fdc79038-33d1-4622-89a7-04ed5cb393a4
+        ports:
+        - portName: DEFAULT
+          retriggerEnabled: 1
+        position: {x: 2125.6, y: -178.4}
+        responseText: same
+        character: 0
+    - rid: 6785856306322080689
+      type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
+      data:
+        GUID: 127fb54c-c4e6-4fa0-8434-04421a6c6882
+        ports:
+        - portName: DEFAULT
+          retriggerEnabled: 1
+        position: {x: 2118.4, y: 74.399994}
+        responseText: NOT SAMW
+        character: 0
+    - rid: 6785856306322080690
+      type: {class: SerializedDialogNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
+      data:
+        GUID: 8e89789f-1b45-404e-ba19-ef088998598e
         ports:
         - portName: Choice 0
           retriggerEnabled: 1
-        position: {x: 1505.6, y: -48.800003}
-        dialogText: Dialog Node2
+        position: {x: 2417.6, y: -69.600006}
+        dialogText: Dialog Node CENTRAL
         defaultPort: -1
-    - rid: 6785856306322080121
+    - rid: 6785856306322080691
       type: {class: SerializedExitNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
-        GUID: db8c6076-23b7-420e-8e86-be14b7f9ae80
+        GUID: dadedcef-e970-4f9c-bfd3-a677a241d5fc
         ports: []
-        position: {x: 1867.2, y: -16}
+        position: {x: 2804.8, y: -28.800001}

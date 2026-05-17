@@ -72,6 +72,8 @@ public class DialogSystem : MonoBehaviour
     private bool waitingForOptionSelection = false;
     private bool isPaused = false;
     private bool isPlayingResponses = false;
+    private bool optionResponseSelected = false;
+    private List<DialogEntry> pendingOptionChain = null;
     private Vector2 originalPanelPosition;
     private Coroutine typingCoroutine, moveCoroutine, dotCoroutine;
     private Coroutine reactionAnimationCoroutine;
@@ -692,7 +694,16 @@ private void ShowOptions(List<DialogOption> options)
             return;
         }
 
-        // Play response dialogs WITHOUT modifying the ScriptableObject
+        // If we're inside PlayOptionResponses, signal the pending chain
+        // instead of starting a nested coroutine
+        if (isPlayingResponses)
+        {
+            pendingOptionChain = selectedOption.responseDialogs;
+            optionResponseSelected = true;
+            return;
+        }
+
+        // Play response dialogs (top-level option from main entries)
         if (selectedOption.responseDialogs != null && selectedOption.responseDialogs.Count > 0)
         {
             isPlayingResponses = true;
@@ -714,7 +725,34 @@ private void ShowOptions(List<DialogOption> options)
             while (isTyping)
                 yield return null;
 
-            yield return new WaitUntil(() => Input.GetKeyDown(advanceKey));
+            // If this response entry itself has options, wait for selection
+            // and play the chosen inline chain before continuing the outer list
+            if (entry.hasOptions && entry.options.Count > 0)
+            {
+                optionResponseSelected = false;
+                pendingOptionChain = null;
+
+                yield return new WaitUntil(() => optionResponseSelected);
+
+                // Play the selected option's response chain inline
+                if (pendingOptionChain != null)
+                {
+                    foreach (var sub in pendingOptionChain)
+                    {
+                        currentDialogEntry = sub;
+                        DisplayDialog(sub);
+                        while (isTyping)
+                            yield return null;
+                        yield return new WaitUntil(() => Input.GetKeyDown(advanceKey));
+                    }
+                }
+
+                pendingOptionChain = null;
+            }
+            else
+            {
+                yield return new WaitUntil(() => Input.GetKeyDown(advanceKey));
+            }
         }
 
         isPlayingResponses = false;
@@ -780,6 +818,8 @@ private void ShowOptions(List<DialogOption> options)
 
         ClearOptions();
         isPlayingResponses = false;
+        optionResponseSelected = false;
+        pendingOptionChain = null;
 
         if (typingCoroutine != null)
         {

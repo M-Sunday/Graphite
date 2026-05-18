@@ -1,0 +1,38 @@
+# Slard Hurt
+
+=response # 67fee480-ff27-4d60-a17e-6eeec73ef8e3
+Maya: rjvfhjfwhekfwefw
+
+=response # 5047d361-cd6c-4fd9-82e9-e6f11ff33dbf
+Maya: NOT SAMW
+
+=dialog # 7d4b5d26-0327-49a3-b367-44b81cbf9e1e
+Maya: Dialog Node
+
+=option # c0bdf5c8-ecd4-4e27-a678-307160a1027b
+nn
+
+=option # a36f6338-0363-4512-bb32-3135e9e843c3
+yy
+
+=option # ecad29f1-59cf-474e-afa1-5a284323550d
+op1
+
+=option # 2917aee0-263c-4917-9c3e-b0793a538fc4
+op2
+
+=response # 8e1a9c51-d495-4938-84a1-1d730b0acd81
+Maya: triplel t
+
+=dialog # fdba5284-54dd-4cc3-8fa1-f8c378bd4193
+Maya: Dialog Node
+
+=response # 2f784af4-917a-4c0a-970b-f6df6a43ac0e
+Maya: 22
+
+=dialog # 8e610bfd-233e-47ed-8b28-6bd80f1de544
+Maya: Dialog Node
+
+=dialog # d62b8019-aae2-4595-997d-847b1f0ec2f4
+Maya: <wave><b>Hello</b></wave> <_pause> Mary...
+

@@ -170,41 +170,104 @@ namespace Graphite.Dialog
         {
             _toolbar = new Toolbar();
 
-            _saveButton = new Button(() => Save()) { text = "Save Data" };
+            _saveButton = new ToolbarButton(() => Save()) { text = "Save" };
+            _saveButton.style.unityFontStyleAndWeight = FontStyle.Bold;
+            _saveButton.style.marginLeft = 4;
+            _saveButton.style.marginRight = 4;
+            _saveButton.style.paddingLeft = 10;
+            _saveButton.style.paddingRight = 10;
             _toolbar.Add(_saveButton);
 
             _toolbar.Add(new ToolbarSpacer());
 
-            var collapseAllButton = new Button(() =>
+            var collapseAllButton = new ToolbarButton(() =>
             {
                 if (_graphView != null) _graphView.ToggleCollapseAll();
             }) { text = "Collapse All" };
+            collapseAllButton.tooltip = "Collapse/expand all nodes";
+            collapseAllButton.style.marginLeft = 4;
+            collapseAllButton.style.marginRight = 4;
+            collapseAllButton.style.paddingLeft = 10;
+            collapseAllButton.style.paddingRight = 10;
             _toolbar.Add(collapseAllButton);
 
-            _toolbar.Add(new ToolbarSpacer());
-
-            var showAllButton = new Button(() =>
+            var showAllButton = new ToolbarButton(() =>
             {
                 if (_graphView != null) _graphView.FrameAll();
             }) { text = "Show All" };
+            showAllButton.tooltip = "Frame entire graph";
+            showAllButton.style.marginLeft = 4;
+            showAllButton.style.marginRight = 4;
+            showAllButton.style.paddingLeft = 10;
+            showAllButton.style.paddingRight = 10;
             _toolbar.Add(showAllButton);
 
-            _toolbar.Add(new ToolbarSpacer());
-
-            var zoomSelectedButton = new Button(() =>
+            var zoomSelectedButton = new ToolbarButton(() =>
             {
                 if (_graphView != null) _graphView.FrameSelection();
             }) { text = "Zoom Selected" };
+            zoomSelectedButton.tooltip = "Frame selected nodes";
+            zoomSelectedButton.style.marginLeft = 4;
+            zoomSelectedButton.style.marginRight = 4;
+            zoomSelectedButton.style.paddingLeft = 10;
+            zoomSelectedButton.style.paddingRight = 10;
             _toolbar.Add(zoomSelectedButton);
 
             _toolbar.Add(new ToolbarSpacer());
 
-            var bbToggle = new Button(() => ToggleBlackboard()) { text = "Blackboard" };
-            _toolbar.Add(bbToggle);
+            var exportButton = new ToolbarButton(() =>
+            {
+                if (target != null) DialogGraphTextSerializer.Export(target);
+            }) { text = "Export" };
+            exportButton.tooltip = "Export dialog to text file";
+            exportButton.style.marginLeft = 4;
+            exportButton.style.marginRight = 4;
+            exportButton.style.paddingLeft = 10;
+            exportButton.style.paddingRight = 10;
+            _toolbar.Add(exportButton);
+
+            var importButton = new ToolbarButton(() =>
+            {
+                if (target != null)
+                {
+                    DialogGraphTextSerializer.Import(target);
+                    _graphView.isDirty = true;
+                }
+            }) { text = "Import" };
+            importButton.tooltip = "Import changes from text file";
+            importButton.style.marginLeft = 4;
+            importButton.style.marginRight = 4;
+            importButton.style.paddingLeft = 10;
+            importButton.style.paddingRight = 10;
+            _toolbar.Add(importButton);
 
             _toolbar.Add(new ToolbarSpacer());
 
-            _helpButton = new Button(()=> OpenHelpWindow()) { text = "?" };
+            var blackboardToggle = new ToolbarToggle
+            {
+                text = "Blackboard",
+                tooltip = "Toggle Blackboard panel",
+                value = false
+            };
+            blackboardToggle.style.marginLeft = 4;
+            blackboardToggle.style.marginRight = 4;
+            blackboardToggle.style.paddingLeft = 10;
+            blackboardToggle.style.paddingRight = 10;
+            blackboardToggle.RegisterValueChangedCallback(evt =>
+            {
+                if (_graphView == null || _graphView.blackboard == null) return;
+                _graphView.blackboard.style.display = evt.newValue ? DisplayStyle.Flex : DisplayStyle.None;
+            });
+            _toolbar.Add(blackboardToggle);
+
+            _toolbar.Add(new ToolbarSpacer());
+
+            _helpButton = new ToolbarButton(() => OpenHelpWindow()) { text = "Help" };
+            _helpButton.tooltip = "Toggle help window";
+            _helpButton.style.marginLeft = 4;
+            _helpButton.style.marginRight = 4;
+            _helpButton.style.paddingLeft = 10;
+            _helpButton.style.paddingRight = 10;
             _toolbar.Add(_helpButton);
 
             rootVisualElement.Add(_toolbar);
@@ -213,8 +276,8 @@ namespace Graphite.Dialog
         private void ToggleBlackboard()
         {
             if (_graphView == null || _graphView.blackboard == null) return;
-            _graphView.blackboard.style.display = _graphView.blackboard.style.display == DisplayStyle.None
-                ? DisplayStyle.Flex : DisplayStyle.None;
+            var bb = _graphView.blackboard;
+            bb.style.display = bb.style.display == DisplayStyle.None ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         private void OnGUI()
@@ -327,6 +390,7 @@ namespace Graphite.Dialog
         {
             var window = GetWindow<DialogGraphHelp>();
             window.titleContent = new GUIContent("Dialog Graph Help");
+            window.minSize = new Vector2(320, 400);
             return window;
         }
 
@@ -337,24 +401,86 @@ namespace Graphite.Dialog
 
         void AddHelpText()
         {
-            var header = new Label("Add inline events to dialog by placing them within [brackets] \n \n Event Types: \n");
-            header.style.whiteSpace = WhiteSpace.Normal;
-            rootVisualElement.Add(header);
+            var scroll = new ScrollView();
+            scroll.style.paddingLeft = 10;
+            scroll.style.paddingRight = 10;
+            scroll.style.paddingTop = 10;
+            scroll.style.paddingBottom = 10;
 
-            for (int i = 0; i < DialogEventDB.inlineDialogEvents.Length; i++)
+            AddSection(scroll, "Keyboard Shortcuts", new[]
             {
-                var ev = DialogEventDB.inlineDialogEvents[i];
-                VisualElement eventElement = new VisualElement();
-                eventElement.style.whiteSpace = WhiteSpace.Normal;
-                eventElement.style.flexDirection = FlexDirection.Row;
-                var ld = new Label(ev.key + "     " + ev.description + "\n"); ld.style.whiteSpace = WhiteSpace.Normal;
-                eventElement.Add(ld);
-                rootVisualElement.Add(eventElement);
+                "Ctrl+S  — Save graph",
+                "Ctrl+Z  — Undo",
+                "Ctrl+Y / Ctrl+Shift+Z  — Redo",
+                "Ctrl+A  — Select all nodes",
+            });
+
+            AddSection(scroll, "Node Types", new[]
+            {
+                "Entry     — Graph entry point (auto-created)",
+                "Dialog    — Character speaks a line of dialogue",
+                "Option    — A player choice (linked from Dialog ports)",
+                "Response  — Character reply after an option is selected",
+                "Retrigger — Re-evaluate a branch",
+                "Event     — Fire a custom event",
+                "Comparison — Conditional branch based on a property",
+                "Exit      — End of a dialog branch",
+            });
+
+            AddSection(scroll, "Reaction Tags", new[]
+            {
+                "<wave></wave>       — Wavy text animation",
+                "<alert></alert>     — Shake with pulsing color",
+                "<shake></shake>     — Shake effect",
+                "<glitch></glitch>   — Glitch displacement",
+                "<rainbow></rainbow> — Rainbow cycling colors",
+                "<b></b>             — Bold text",
+                "<i></i>             — Italic text",
+                "<u></u>             — Underlined text",
+                "<_pause>            — Pause typing at this point",
+                "<color=red></color> — Custom text color",
+                "<size=1.5></size>   — Scale text (1.0 = normal)",
+            });
+
+            AddSection(scroll, "Inline Events", new[]
+            {
+                "[event]  — Fire a custom event via DialogEventRelay",
+                "[____]   — Pause (each _ = 0.2s + 0.2s base)",
+            });
+
+            AddSection(scroll, "Text Export / Import", new[]
+            {
+                "Export Text — Saves a .dialog.txt file next to your",
+                "              graph asset with all dialog content.",
+                "",
+                "Import Text — Reads the .dialog.txt file back and",
+                "              updates node content (text, characters).",
+                "",
+                "Use this to edit dialog in VS Code, translate,",
+                "batch-edit, or review without opening Unity.",
+            });
+
+            rootVisualElement.Add(scroll);
+        }
+
+        void AddSection(VisualElement parent, string title, string[] lines)
+        {
+            var titleLabel = new Label(title);
+            titleLabel.style.unityFontStyleAndWeight = FontStyle.Bold;
+            titleLabel.style.marginTop = 12;
+            titleLabel.style.marginBottom = 4;
+            titleLabel.style.fontSize = 13;
+            parent.Add(titleLabel);
+
+            foreach (var line in lines)
+            {
+                var label = new Label(line);
+                label.style.whiteSpace = WhiteSpace.Normal;
+                label.style.marginLeft = 10;
+                label.style.marginBottom = 1;
+                label.style.fontSize = 11;
+                parent.Add(label);
             }
-            
-            VisualElement propElement = new VisualElement();
-            propElement.Add(new Label("Inject properties inline with the format <prop:PropertyName>"));
-            rootVisualElement.Add(propElement);
         }
     }
 }

@@ -39,9 +39,6 @@ namespace Graphite.Dialog
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
 
-            var grid = new GridBackground();
-            Insert(0, grid);
-
             AddElement(EntryNode.Create(this));
 
             this.RegisterCallback<MouseMoveEvent>(evt => { _lastMousePosition = evt.mousePosition; });

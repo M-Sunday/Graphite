@@ -47,6 +47,16 @@ namespace Graphite.Dialog
         private void OnDisable()
         {
             Undo.undoRedoPerformed -= OnUndoRedo;
+
+            if (_graphView != null && _graphView.isDirty && target != null)
+            {
+                if (EditorUtility.DisplayDialog("Unsaved Changes",
+                    $"Save changes to {target.name} before closing?", "Save", "Discard"))
+                {
+                    Save();
+                }
+            }
+
             if (rootVisualElement.Contains(_noGraphView)) rootVisualElement.Remove(_noGraphView);
             if (rootVisualElement.Contains(_graphView)) rootVisualElement.Remove(_graphView);
             if (rootVisualElement.Contains(_toolbar)) rootVisualElement.Remove(_toolbar);
@@ -173,6 +183,22 @@ namespace Graphite.Dialog
 
             _toolbar.Add(new ToolbarSpacer());
 
+            var showAllButton = new Button(() =>
+            {
+                if (_graphView != null) _graphView.FrameAll();
+            }) { text = "Show All" };
+            _toolbar.Add(showAllButton);
+
+            _toolbar.Add(new ToolbarSpacer());
+
+            var zoomSelectedButton = new Button(() =>
+            {
+                if (_graphView != null) _graphView.FrameSelection();
+            }) { text = "Zoom Selected" };
+            _toolbar.Add(zoomSelectedButton);
+
+            _toolbar.Add(new ToolbarSpacer());
+
             var bbToggle = new Button(() => ToggleBlackboard()) { text = "Blackboard" };
             _toolbar.Add(bbToggle);
 
@@ -258,6 +284,7 @@ namespace Graphite.Dialog
             saveUtility.SaveGraph(target);
             AssetDatabase.SaveAssets();
             _graphView.isDirty = false;
+            Debug.Log($"Dialog graph saved: {target.name}");
         }
 
         void OpenHelpWindow()

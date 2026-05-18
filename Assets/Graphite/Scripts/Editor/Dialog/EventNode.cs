@@ -43,9 +43,10 @@ namespace Graphite.Dialog
             VisualElement bodyElement = new VisualElement();
             bodyElement.style.flexDirection = FlexDirection.Row;
 
-            List<string> eventKeys = new List<string>();
-            DialogEventDB.inlineDialogEvents.ToList().ForEach(e => eventKeys.Add(e.key));
-            eventNode.eventPopup = new PopupField<string>(eventKeys, 0);
+            var eventItems = DialogEventDB.inlineDialogEvents
+                .Select(e => $"{e.key} - {e.description}")
+                .ToList();
+            eventNode.eventPopup = new PopupField<string>(eventItems, 0);
             eventNode.eventPopup.RegisterValueChangedCallback(evt =>
             {
                 if (evt.newValue != evt.previousValue) graph.isDirty = true;
@@ -71,12 +72,14 @@ namespace Graphite.Dialog
 
         public override SerializedNode SerializeNode()
         {
+            var fullValue = this.eventPopup.value;
+            var keyOnly = fullValue.Contains(" - ") ? fullValue.Substring(0, fullValue.IndexOf(" - ")) : fullValue;
             return new SerializedEventNode()
             {
                 GUID = this.GUID,
                 position = this.GetPosition().position,
                 ports = SerializePorts(),
-                eventKey = this.eventPopup.value,
+                eventKey = keyOnly,
                 eventBody = this.eventText.value
             };
         }
@@ -87,7 +90,10 @@ namespace Graphite.Dialog
             graph.ResetPorts(this);
             GUID = d.GUID;
             SetPosition(new Rect(d.position, Vector2.zero));
-            eventPopup.value = d.eventKey;
+            var matching = DialogEventDB.inlineDialogEvents
+                .Select(e => $"{e.key} - {e.description}")
+                .FirstOrDefault(item => item.StartsWith(d.eventKey + " - ") || item == d.eventKey);
+            eventPopup.value = matching ?? DialogEventDB.inlineDialogEvents[0].key + " - " + DialogEventDB.inlineDialogEvents[0].description;
             eventText.value = d.eventBody;
 
             RefreshPorts();

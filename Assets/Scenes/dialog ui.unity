@@ -261,9 +261,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 964051482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d30cfa5d91d9fb4eba3e38104a82559, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b1cd9dd9ca78fd45b6934ce1bec161a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effect: 0
+  waveAmplitude: 10
+  waveFrequency: 2
+  shakeAmount: 5
+  shakeSpeed: 20
+  stopMotionInterval: 0.08
+  stopMotionMoveAmount: 8
+  stopMotionScaleAmount: 0.2
+  stopMotionWaveAmplitude: 10
+  stopMotionWaveFrequency: 2
+  undertaleWaveAmplitude: 10
+  undertaleWaveFrequency: 2
+  undertaleMoveSpeed: 200
 --- !u!114 &964051485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1017,6 +1030,7 @@ GameObject:
   - component: {fileID: 2101867052}
   - component: {fileID: 2101867051}
   - component: {fileID: 2101867050}
+  - component: {fileID: 2101867054}
   m_Layer: 5
   m_Name: DIALOUGE_UI (1)
   m_TagString: Untagged
@@ -1108,6 +1122,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &2101867054
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101867049}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2140874059
 GameObject:
   m_ObjectHideFlags: 0

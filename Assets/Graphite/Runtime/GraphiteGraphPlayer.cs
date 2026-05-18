@@ -41,12 +41,20 @@ public class GraphiteGraphPlayer : MonoBehaviour
     List<DialogEntry> TraverseGraph()
     {
         var entries = new List<DialogEntry>();
+        var visitedGuids = new HashSet<string>();
 
         string currentGuid = "ENTRYPOINT";
         int safety = 0;
 
         while (safety < 200)
         {
+            if (visitedGuids.Contains(currentGuid))
+            {
+                Debug.LogError($"GraphiteGraphPlayer: Cycle detected at node {currentGuid}", graphContainer);
+                break;
+            }
+            visitedGuids.Add(currentGuid);
+
             safety++;
             var link = graphContainer.nodeLinks.FirstOrDefault(l => l.baseNodeGuid == currentGuid && l.portName == "DEFAULT");
             if (link == null) break;
@@ -110,17 +118,30 @@ public class GraphiteGraphPlayer : MonoBehaviour
             }
         }
 
+        if (safety >= 200)
+        {
+            Debug.LogError($"GraphiteGraphPlayer: Traversal hit safety limit - possible cycle or excessive depth in graph \"{graphContainer.name}\"", graphContainer);
+        }
+
         return entries;
     }
 
     List<DialogEntry> TraverseSubGraph(string startGuid)
     {
         var entries = new List<DialogEntry>();
+        var visitedGuids = new HashSet<string>();
         string currentGuid = startGuid;
         int safety = 0;
 
         while (safety < 200)
         {
+            if (visitedGuids.Contains(currentGuid))
+            {
+                Debug.LogError($"GraphiteGraphPlayer: Cycle detected in subgraph at node {currentGuid}", graphContainer);
+                break;
+            }
+            visitedGuids.Add(currentGuid);
+
             safety++;
             var link = graphContainer.nodeLinks.FirstOrDefault(l => l.baseNodeGuid == currentGuid && l.portName == "DEFAULT");
             if (link == null) break;
@@ -194,6 +215,11 @@ public class GraphiteGraphPlayer : MonoBehaviour
             {
                 currentGuid = GetConnectedNode(currentGuid, "DEFAULT");
             }
+        }
+
+        if (safety >= 200)
+        {
+            Debug.LogError($"GraphiteGraphPlayer: Subgraph traversal hit safety limit - possible cycle or excessive depth", graphContainer);
         }
 
         return entries;

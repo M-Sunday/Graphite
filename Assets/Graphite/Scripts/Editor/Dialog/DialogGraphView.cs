@@ -56,19 +56,29 @@ namespace Graphite.Dialog
 
         private void OnScrollWheel(WheelEvent evt)
         {
-            if (evt.ctrlKey || evt.commandKey)
+            bool ctrl = evt.ctrlKey || evt.commandKey;
+            bool isTrackpad = evt.delta.x != 0 || (evt.delta.y != 0 && Mathf.Abs(evt.delta.y) < 50f);
+
+            if (isTrackpad && !ctrl)
             {
-                if (evt.delta.y > 0)
-                    contentViewContainer.transform.scale *= 1.05f;
-                else
-                    contentViewContainer.transform.scale *= 0.95f;
+                var delta = evt.delta;
+                delta.x = -delta.x;
+                contentViewContainer.transform.position += delta;
                 evt.StopPropagation();
                 return;
             }
 
-            var delta = evt.delta;
-            delta.x = -delta.x;
-            contentViewContainer.transform.position += delta;
+            float zoomFactor = evt.delta.y > 0 ? 0.95f : 1.05f;
+            float newScale = Mathf.Clamp(
+                contentViewContainer.transform.scale.x * zoomFactor,
+                ContentZoomer.DefaultMinScale,
+                ContentZoomer.DefaultMaxScale);
+            zoomFactor = newScale / contentViewContainer.transform.scale.x;
+
+            Vector3 mousePos = evt.mousePosition;
+            Vector3 pos = contentViewContainer.transform.position;
+            contentViewContainer.transform.position = mousePos - (mousePos - pos) * zoomFactor;
+            contentViewContainer.transform.scale = Vector3.one * newScale;
             evt.StopPropagation();
         }
 
@@ -113,9 +123,8 @@ namespace Graphite.Dialog
                             if (_dragSourcePort != null && !_dragSourcePort.connected)
                             {
                                 _searchWindow.SetSourcePort(_dragSourcePort);
-                                var screenPos = this.panel?.visualTree?.worldBound.position ?? Vector2.zero;
                                 SearchWindow.Open(new SearchWindowContext(
-                                    screenPos + _lastMousePosition, 0, 0), _searchWindow);
+                                    _screenOrigin + _lastMousePosition, 0, 0), _searchWindow);
                             }
                             _dragSourcePort = null;
                         }).StartingIn(50);
@@ -214,29 +223,30 @@ namespace Graphite.Dialog
             var basePos = dialogNode.GetPosition().position;
 
             DialogNode.AddChoicePort(this, dialogNode, "op1");
-            DialogNode.AddChoicePort(this, dialogNode, "op2");
-
-            var ports = dialogNode.outputContainer.Children()
+            var port1 = dialogNode.outputContainer.Children()
                 .Where(p => p is Port).Cast<Port>()
-                .Where(p => p.portName != "DEFAULT").ToList();
-            var port1 = ports.Count >= 2 ? ports[ports.Count - 2] : null;
-            var port2 = ports.Count >= 1 ? ports[ports.Count - 1] : null;
+                .LastOrDefault(p => p.portName != "DEFAULT");
 
-            var opt1 = OptionNode.Create(this, basePos + new Vector2(350, -50));
+            DialogNode.AddChoicePort(this, dialogNode, "op2");
+            var port2 = dialogNode.outputContainer.Children()
+                .Where(p => p is Port).Cast<Port>()
+                .LastOrDefault(p => p.portName != "DEFAULT");
+
+            var opt1 = OptionNode.Create(this, basePos + new Vector2(600, -100));
             opt1.optionTextField.value = "op1";
             AddElement(opt1);
             ConnectPorts(port1, GetInputPort(opt1));
 
-            var resp1 = ResponseNode.Create(this, basePos + new Vector2(550, -50));
+            var resp1 = ResponseNode.Create(this, basePos + new Vector2(1200, -100));
             AddElement(resp1);
             ConnectPorts(GetDefaultPort(opt1), GetInputPort(resp1));
 
-            var opt2 = OptionNode.Create(this, basePos + new Vector2(350, 150));
+            var opt2 = OptionNode.Create(this, basePos + new Vector2(600, 100));
             opt2.optionTextField.value = "op2";
             AddElement(opt2);
             ConnectPorts(port2, GetInputPort(opt2));
 
-            var resp2 = ResponseNode.Create(this, basePos + new Vector2(550, 150));
+            var resp2 = ResponseNode.Create(this, basePos + new Vector2(1200, 100));
             AddElement(resp2);
             ConnectPorts(GetDefaultPort(opt2), GetInputPort(resp2));
 
@@ -405,13 +415,12 @@ namespace Graphite.Dialog
 
         public void RemovePort(Node node, Port generatedPort)
         {
-            var targetEdge = edges.ToList().Where(x => x.output.portName == generatedPort.portName && x.output.node == generatedPort.node);
+            var targetEdge = edges.FirstOrDefault(x => x.output.portName == generatedPort.portName && x.output.node == generatedPort.node);
 
-            if (targetEdge.Any())
+            if (targetEdge != null)
             {
-                var edge = targetEdge.First();
-                edge.input.Disconnect(edge);
-                RemoveElement(targetEdge.First());
+                targetEdge.input.Disconnect(targetEdge);
+                RemoveElement(targetEdge);
             }
             node.outputContainer.Remove(generatedPort);
 
@@ -430,16 +439,38 @@ namespace Graphite.Dialog
         {
             if (change.elementsToRemove != null)
             {
+                List<Port> portsToCheck = new List<Port>();
+
                 foreach (GraphElement e in change.elementsToRemove)
                 {
                     if (e is BlackboardField)
                     {
-                        //actually delete the blackboard field
                         var bf = (BlackboardField)e;
-                        //blackboard.Remove(bf.parent);
                         var property = exposedProperties.Find(x => x.PropertyName == bf.text);
                         exposedProperties.Remove(property);
                     }
+                    else if (e is Edge edge)
+                    {
+                        var sourcePort = edge.output;
+                        if (sourcePort.node is DialogNode && sourcePort.portName != "DEFAULT")
+                        {
+                            portsToCheck.Add(sourcePort);
+                        }
+                    }
+                }
+
+                if (portsToCheck.Count > 0)
+                {
+                    schedule.Execute(() =>
+                    {
+                        foreach (var port in portsToCheck)
+                        {
+                            if (port.node != null && nodes.ToList().Contains(port.node) && !port.connected)
+                            {
+                                RemovePort((Node)port.node, port);
+                            }
+                        }
+                    }).StartingIn(0);
                 }
             }
             isDirty = true;
@@ -546,5 +577,7 @@ namespace Graphite.Dialog
             }
             isDirty = true;
         }
+
+
     }
 }

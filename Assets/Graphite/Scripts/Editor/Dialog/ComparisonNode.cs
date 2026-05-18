@@ -54,8 +54,9 @@ namespace Graphite.Dialog
             VisualElement bodyElement = new VisualElement();
             bodyElement.style.flexDirection = FlexDirection.Column;
 
-            List<string> propKeys = new List<string>();
-            graph.exposedProperties.ToList().ForEach(e => propKeys.Add(e.PropertyName));
+            List<string> propKeys = graph.exposedProperties.Select(e => e.PropertyName).ToList();
+            if (propKeys.Count == 0)
+                propKeys.Add("No Properties Defined");
             comparisonNode.propertyField = new PopupField<string>(propKeys, 0);
             comparisonNode.propertyField.RegisterValueChangedCallback(evt =>
             {
@@ -127,12 +128,22 @@ namespace Graphite.Dialog
         public override void DeserializeNode(DialogGraphView graph, SerializedNode data)
         {
             var d = data as SerializedComparisonNode;
+            graph.ResetPorts(this);
             GUID = d.GUID;
             SetPosition(new Rect(d.position, Vector2.zero));
             propertyField.value = d.propertyName;
             typeField.value = d.type;
             comparisonField.value = d.comparison;
             comparatorField.value = d.comparator;
+
+            // Recreate True and False ports
+            var truePort = DialogGraphView.GeneratePort(this, Direction.Output, Port.Capacity.Single);
+            truePort.portName = "True";
+            outputContainer.Add(truePort);
+
+            var falsePort = DialogGraphView.GeneratePort(this, Direction.Output, Port.Capacity.Single);
+            falsePort.portName = "False";
+            outputContainer.Add(falsePort);
 
             RefreshPorts();
             RefreshExpandedState();

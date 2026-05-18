@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Graphite::Graphite.Dialog.DialogGraphContainer
   nodeLinks: []
   nodeData:
-  - rid: 6785856308565771199
+  - rid: 6785856308565771203
   exposedProperties: []
   references:
     version: 2
     RefIds:
-    - rid: 6785856308565771199
+    - rid: 6785856308565771203
       type: {class: SerializedNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: ENTRYPOINT

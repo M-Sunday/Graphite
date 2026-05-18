@@ -157,9 +157,6 @@ public class DialogSystem : MonoBehaviour
 
     void Update()
     {
-        if (false)
-            return;
-
         if (isDialogActive && !waitingForOptionSelection && !isPlayingResponses && Input.GetKeyDown(advanceKey))
         {
             if (isTyping) 
@@ -230,9 +227,6 @@ public class DialogSystem : MonoBehaviour
 
     public void NextDialog()
     {
-        if (false)
-            return;
-
         if (waitingForOptionSelection || activeDialog == null) return;
 
         HideContinuePrompt();
@@ -269,6 +263,12 @@ public class DialogSystem : MonoBehaviour
     private void DisplayDialog(DialogEntry dialog)
     {
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+
+        if (nameText == null || dialogText == null)
+        {
+            Debug.LogError("DialogSystem: nameText or dialogText UI references are null!");
+            return;
+        }
 
         // Set name color using Reaction Manager
         if (reactionManager != null)
@@ -460,8 +460,7 @@ public class DialogSystem : MonoBehaviour
 
     private void ContinueFromPause()
     {
-        if (false)
-            return;
+        if (!isPaused) return;
 
         isPaused = false;
         HideContinuePrompt();
@@ -546,9 +545,6 @@ public class DialogSystem : MonoBehaviour
 
     private void SkipTyping()
     {
-        if (false)
-            return;
-
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         
         if (isPaused)
@@ -629,7 +625,6 @@ private void ShowOptions(List<DialogOption> options)
                 textComp.text = (i + 1).ToString();
                 textComp.gameObject.SetActive(true);
                 foundNumText = true;
-                Debug.Log($"Found and set Num_Text ({textComp.gameObject.name}) to: {i + 1}");
             }
             // If it's Opt_Text or contains "opt", set the option text
             else if (componentName.Contains("opt") || componentName == "opt_text")
@@ -637,16 +632,12 @@ private void ShowOptions(List<DialogOption> options)
                 textComp.text = options[i].optionText;
                 textComp.gameObject.SetActive(true);
                 foundOptText = true;
-                Debug.Log($"Found and set Opt_Text ({textComp.gameObject.name}) to: {options[i].optionText}");
             }
         }
         
         // If we didn't find them by name, try a different approach - maybe they're the only text components
         if (!foundNumText || !foundOptText)
         {
-            Debug.Log($"Button {i} has {allTextComponents.Length} text components. Attempting to assign by order...");
-            
-            // If there are exactly 2 text components, assume first is number, second is text
             if (allTextComponents.Length >= 2)
             {
                 // Assume first text component is the number
@@ -654,7 +645,6 @@ private void ShowOptions(List<DialogOption> options)
                 {
                     allTextComponents[0].text = (i + 1).ToString();
                     allTextComponents[0].gameObject.SetActive(true);
-                    Debug.Log($"Assumed first text component ({allTextComponents[0].gameObject.name}) is Num_Text, set to: {i + 1}");
                 }
                 
                 // Assume second text component is the option text
@@ -662,7 +652,6 @@ private void ShowOptions(List<DialogOption> options)
                 {
                     allTextComponents[1].text = options[i].optionText;
                     allTextComponents[1].gameObject.SetActive(true);
-                    Debug.Log($"Assumed second text component ({allTextComponents[1].gameObject.name}) is Opt_Text, set to: {options[i].optionText}");
                 }
             }
         }

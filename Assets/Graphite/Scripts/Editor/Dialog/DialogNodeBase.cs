@@ -159,10 +159,10 @@ namespace Graphite.Dialog
             var ports = new List<SerializedPort>();
             outputContainer.Children().ToList().ForEach(p => 
             {
-                if (p is Port)
+                if (p is Port port && port.portName != "DEFAULT")
                 {
                     var retrigger = GetRetriggerToggle(p);
-                    ports.Add(new SerializedPort(((Port)p).portName, retrigger != null ? retrigger.Value : true));
+                    ports.Add(new SerializedPort(port.portName, retrigger != null ? retrigger.Value : true));
                 }
             });
             return ports;

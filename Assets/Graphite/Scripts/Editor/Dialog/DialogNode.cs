@@ -21,6 +21,7 @@ namespace Graphite.Dialog
         public Button collapseButton;
         public bool expanded = true;
         public Label summaryLabel;
+        private DialogGraphView _graph;
 
         public ObjectField voiceLine;
 
@@ -31,6 +32,7 @@ namespace Graphite.Dialog
             {
                 GUID = System.Guid.NewGuid().ToString(),
                 title = "Dialog",
+                _graph = graph,
             };
 
             dialogNode.tooltip = "Plays dialog";
@@ -75,10 +77,6 @@ namespace Graphite.Dialog
             dialogNode.contentContainer.Add(dialogNode.dialogText);
 
             dialogNode.contentContainer.Add(DialogGraphView.Spacer(10));
-
-            var addOptionsButton = new Button(() => graph.CreateOptionPair(dialogNode)) { text = "Add Options" };
-            addOptionsButton.style.width = 100;
-            dialogNode.contentContainer.Add(addOptionsButton);
 
             dialogNode.mainContainer.Add(dialogNode.contentContainer);
 
@@ -163,10 +161,38 @@ namespace Graphite.Dialog
             oldLabel.style.display = DisplayStyle.None;
             //generatedPort.contentContainer.Remove(oldLabel);
 
-            var outputPortCount = dialogNode.outputContainer.Query("connector").ToList().Count;
-            generatedPort.portName = $"Choice {outputPortCount}";
+            // Generate unique port name to avoid collisions
+            var existingNames = dialogNode.outputContainer.Children()
+                .OfType<Port>()
+                .Select(p => p.portName)
+                .ToHashSet();
 
-            var choicePortName = string.IsNullOrEmpty(overridePortName) ? $"Choice {outputPortCount}" : overridePortName;
+            string choicePortName;
+            if (string.IsNullOrEmpty(overridePortName))
+            {
+                int portNum = 0;
+                do
+                {
+                    portNum++;
+                    choicePortName = $"Choice {portNum}";
+                } while (existingNames.Contains(choicePortName));
+            }
+            else
+            {
+                choicePortName = overridePortName;
+                if (existingNames.Contains(choicePortName))
+                {
+                    // Append number to make unique
+                    int suffix = 1;
+                    while (existingNames.Contains($"{choicePortName} {suffix}"))
+                    {
+                        suffix++;
+                    }
+                    choicePortName = $"{choicePortName} {suffix}";
+                }
+            }
+
+            generatedPort.portName = choicePortName;
 
             var textField = new TextField
             {
@@ -191,8 +217,17 @@ namespace Graphite.Dialog
         }
 
 
-        readonly static System.Text.RegularExpressions.Regex regex_removeEvents = new System.Text.RegularExpressions.Regex(@"\n|\[([^]]*)\]");
-        readonly static System.Text.RegularExpressions.Regex regex_removeWhitespace = new System.Text.RegularExpressions.Regex(@"/\S.*\S/");
+        public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+        {
+            base.BuildContextualMenu(evt);
+            evt.menu.AppendAction("Add Option", action =>
+            {
+                if (_graph != null) _graph.CreateOptionPair(this);
+            });
+        }
+
+        readonly static System.Text.RegularExpressions.Regex regex_removeEvents = new System.Text.RegularExpressions.Regex(@"\n|\[([^]]*)\]", System.Text.RegularExpressions.RegexOptions.Compiled);
+        readonly static System.Text.RegularExpressions.Regex regex_removeWhitespace = new System.Text.RegularExpressions.Regex(@"\s+", System.Text.RegularExpressions.RegexOptions.Compiled);
         static string GetNodeTitle(string text)
         {
             text = regex_removeEvents.Replace(text, "");
@@ -234,11 +269,14 @@ namespace Graphite.Dialog
             graph.ResetPorts(this);
             GUID = d.GUID;
             SetPosition(new Rect(d.position, Vector2.zero));
-            for(int p = 0; p < d.ports.Count; p++)
+            if (d.ports != null)
             {
-                if (d.ports[p].portName != "DEFAULT") AddChoicePort(graph, this, d.ports[p].portName, d.ports[p].retriggerEnabled, p == d.defaultPort); 
+                for(int p = 0; p < d.ports.Count; p++)
+                {
+                    if (d.ports[p].portName != "DEFAULT")
+                        AddChoicePort(graph, this, d.ports[p].portName, d.ports[p].retriggerEnabled, p == d.defaultPort && d.defaultPort < d.ports.Count);
+                }
             }
-            d.ports.ForEach(p => { });
             dialogText.value = d.dialogText;
             characterField.value = d.character;
 

@@ -76,6 +76,13 @@ namespace Graphite.Dialog
 
         private void ClearGraph(DialogGraphContainer container)
         {
+            var entryNodes = nodes.Where(n => n is EntryNode).ToList();
+            for (int i = 1; i < entryNodes.Count; i++)
+            {
+                edges.Where(x => x.input.node == entryNodes[i]).ToList().ForEach(edge => _targetGraphView.RemoveElement(edge));
+                _targetGraphView.RemoveElement(entryNodes[i]);
+            }
+
             foreach (var node in nodes)
             {
                 if (node is EntryNode) continue;
@@ -146,7 +153,12 @@ namespace Graphite.Dialog
                 for (int c = 0; c < connections.Count; c++)
                 {
                     var targetNodeGuid = connections[c].targetNodeGuid;
-                    var targetNode = nodes.First(x => x.GUID == targetNodeGuid);
+                    var targetNode = nodes.FirstOrDefault(x => x.GUID == targetNodeGuid);
+                    if (targetNode == null)
+                    {
+                        Debug.LogWarning($"GraphSaveUtility: Could not find target node with GUID {targetNodeGuid}");
+                        continue;
+                    }
                     LinkNodes((Port)nodes[i].outputContainer.Children().ToList().Find(p => p is Port && ((Port)p).portName == connections[c].portName), (Port)targetNode.inputContainer[0]);
 
                     targetNode.SetPosition(new Rect(container.nodeData.First(x => x != null && x.GUID == targetNode.GUID).position, _targetGraphView.defaultNodeSize));

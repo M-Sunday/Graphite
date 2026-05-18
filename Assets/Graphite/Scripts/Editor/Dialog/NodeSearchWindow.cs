@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Experimental;
@@ -60,6 +61,10 @@ namespace Graphite.Dialog
             new SearchTreeEntry(new GUIContent("Exit Node"))
             {
                 userData = new ExitNode(), level = 1
+            },
+            new SearchTreeEntry(new GUIContent("Add Option"))
+            {
+                userData = "AddOption", level = 1
             }
         };
             return tree;
@@ -102,6 +107,11 @@ namespace Graphite.Dialog
             }
             else if (SearchTreeEntry.userData is EntryNode)
             {
+                if (_graphView.nodes.ToList().Any(n => n is EntryNode))
+                {
+                    EditorUtility.DisplayDialog("Error", "Entry Node can only exist once", "OK");
+                    return false;
+                }
                 var node = EntryNode.Create(_graphView);
                 if (_sourcePort != null)
                     _graphView.CreateNodeFromPort(_sourcePort, node, localMousePosition);
@@ -166,6 +176,15 @@ namespace Graphite.Dialog
                     node.SetPosition(new Rect(localMousePosition, _graphView.defaultNodeSize));
                     _graphView.AddElement(node);
                 }
+                _sourcePort = null;
+                _graphView.isDirty = true;
+                return true;
+            }
+            else if (SearchTreeEntry.userData is string s && s == "AddOption")
+            {
+                var dialogNode = _sourcePort?.node as DialogNode;
+                if (dialogNode != null)
+                    _graphView.CreateOptionPair(dialogNode);
                 _sourcePort = null;
                 _graphView.isDirty = true;
                 return true;

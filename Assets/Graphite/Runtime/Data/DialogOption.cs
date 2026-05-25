@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class DialogOption
 {
     public string optionText;
+    [SerializeReference]
     public List<DialogEntry> responseDialogs = new List<DialogEntry>();
     public DialogSO nextDialogSet; // Optional: switch to different DialogSO
 

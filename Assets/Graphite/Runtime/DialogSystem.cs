@@ -73,6 +73,7 @@ public class DialogSystem : MonoBehaviour
     private bool isPaused = false;
     private bool isPlayingResponses = false;
     private bool optionResponseSelected = false;
+    [System.NonSerialized]
     private List<DialogEntry> pendingOptionChain = null;
     private Vector2 originalPanelPosition;
     private Coroutine typingCoroutine, moveCoroutine, dotCoroutine;
@@ -830,6 +831,10 @@ private void ShowOptions(List<DialogOption> options)
         {
             reactionManager.ClearEffects();
         }
+
+        // Clear text to remove any lingering vertex effects (wave, shake, etc.)
+        if (dialogText != null) dialogText.text = "";
+        if (nameText != null) nameText.text = "";
 
         // Hide number text
         if (numText != null)

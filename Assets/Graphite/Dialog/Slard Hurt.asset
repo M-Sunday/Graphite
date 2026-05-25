@@ -56,26 +56,26 @@ MonoBehaviour:
     portName: Choice 2
     targetNodeGuid: a36f6338-0363-4512-bb32-3135e9e843c3
   nodeData:
-  - rid: 6785856328134557928
-  - rid: 6785856328134557929
-  - rid: 6785856328134557930
-  - rid: 6785856328134557931
-  - rid: 6785856328134557932
-  - rid: 6785856328134557933
-  - rid: 6785856328134557934
-  - rid: 6785856328134557935
-  - rid: 6785856328134557936
-  - rid: 6785856328134557937
-  - rid: 6785856328134557938
-  - rid: 6785856328134557939
-  - rid: 6785856328134557940
-  - rid: 6785856328134557941
-  - rid: 6785856328134557942
+  - rid: 6785856379620164234
+  - rid: 6785856379620164235
+  - rid: 6785856379620164236
+  - rid: 6785856379620164237
+  - rid: 6785856379620164238
+  - rid: 6785856379620164239
+  - rid: 6785856379620164240
+  - rid: 6785856379620164241
+  - rid: 6785856379620164242
+  - rid: 6785856379620164243
+  - rid: 6785856379620164244
+  - rid: 6785856379620164245
+  - rid: 6785856379620164246
+  - rid: 6785856379620164247
+  - rid: 6785856379620164248
   exposedProperties: []
   references:
     version: 2
     RefIds:
-    - rid: 6785856328134557928
+    - rid: 6785856379620164234
       type: {class: SerializedNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: ENTRYPOINT
@@ -83,7 +83,7 @@ MonoBehaviour:
         - portName: DEFAULT
           retriggerEnabled: 1
         position: {x: 0, y: 0}
-    - rid: 6785856328134557929
+    - rid: 6785856379620164235
       type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 67fee480-ff27-4d60-a17e-6eeec73ef8e3
@@ -91,7 +91,7 @@ MonoBehaviour:
         position: {x: 1468, y: 171.2}
         responseText: rjvfhjfwhekfwefw
         character: 0
-    - rid: 6785856328134557930
+    - rid: 6785856379620164236
       type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 5047d361-cd6c-4fd9-82e9-e6f11ff33dbf
@@ -99,7 +99,7 @@ MonoBehaviour:
         position: {x: 1463.2, y: 416.8}
         responseText: NOT SAMW
         character: 0
-    - rid: 6785856328134557931
+    - rid: 6785856379620164237
       type: {class: SerializedDialogNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 7d4b5d26-0327-49a3-b367-44b81cbf9e1e
@@ -108,45 +108,45 @@ MonoBehaviour:
           retriggerEnabled: 1
         - portName: op2
           retriggerEnabled: 1
-        position: {x: 2101.5999, y: 420}
+        position: {x: 2101.6, y: 420}
         dialogText: Dialog Node
         character: 0
         defaultPort: -1
-    - rid: 6785856328134557932
+    - rid: 6785856379620164238
       type: {class: SerializedExitNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: b0ea358d-3122-4653-b47b-b8ef6c05f933
         ports: []
-        position: {x: 2109.5999, y: 171.2}
-    - rid: 6785856328134557933
+        position: {x: 2109.6, y: 171.2}
+    - rid: 6785856379620164239
       type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: c0bdf5c8-ecd4-4e27-a678-307160a1027b
         ports: []
         position: {x: 879.2, y: 163.2}
         optionText: nn
-    - rid: 6785856328134557934
+    - rid: 6785856379620164240
       type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: a36f6338-0363-4512-bb32-3135e9e843c3
         ports: []
         position: {x: 875.2, y: 388}
         optionText: yy
-    - rid: 6785856328134557935
+    - rid: 6785856379620164241
       type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: ecad29f1-59cf-474e-afa1-5a284323550d
         ports: []
         position: {x: 2759.2, y: 420}
         optionText: op1
-    - rid: 6785856328134557936
+    - rid: 6785856379620164242
       type: {class: SerializedOptionNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 2917aee0-263c-4917-9c3e-b0793a538fc4
         ports: []
         position: {x: 2759.2, y: 620}
         optionText: op2
-    - rid: 6785856328134557937
+    - rid: 6785856379620164243
       type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 8e1a9c51-d495-4938-84a1-1d730b0acd81
@@ -154,13 +154,13 @@ MonoBehaviour:
         position: {x: 3339.2, y: 649.6}
         responseText: triplel t
         character: 0
-    - rid: 6785856328134557938
+    - rid: 6785856379620164244
       type: {class: SerializedExitNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 648898b6-49e3-420b-a040-31b7214bf94d
         ports: []
         position: {x: 4059.2, y: 496.8}
-    - rid: 6785856328134557939
+    - rid: 6785856379620164245
       type: {class: SerializedDialogNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: fdba5284-54dd-4cc3-8fa1-f8c378bd4193
@@ -171,7 +171,7 @@ MonoBehaviour:
         dialogText: Dialog Node
         character: 0
         defaultPort: -1
-    - rid: 6785856328134557940
+    - rid: 6785856379620164246
       type: {class: SerializedResponseNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 2f784af4-917a-4c0a-970b-f6df6a43ac0e
@@ -179,7 +179,7 @@ MonoBehaviour:
         position: {x: 3342.4, y: 422.4}
         responseText: 22
         character: 0
-    - rid: 6785856328134557941
+    - rid: 6785856379620164247
       type: {class: SerializedDialogNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: 8e610bfd-233e-47ed-8b28-6bd80f1de544
@@ -188,14 +188,14 @@ MonoBehaviour:
         dialogText: Dialog Node
         character: 0
         defaultPort: -1
-    - rid: 6785856328134557942
+    - rid: 6785856379620164248
       type: {class: SerializedDialogNode, ns: Graphite.Dialog, asm: Assembly-CSharp}
       data:
         GUID: d62b8019-aae2-4595-997d-847b1f0ec2f4
         ports:
         - portName: Choice 2
           retriggerEnabled: 1
-        position: {x: 213.59999, y: 136.8}
-        dialogText: <wave><b>Hello</b></wave> <_pause> Mary...
+        position: {x: 213.6, y: 136.8}
+        dialogText: '<b>hola</b><_pause><wave>PABLO...</wave> '
         character: 0
         defaultPort: -1

@@ -10,6 +10,7 @@ public class DialogEntry
     public string dialogText;
 
     public bool hasOptions;
+    [SerializeReference]
     public List<DialogOption> options = new List<DialogOption>();
 
     [ColorUsage(true, true)]

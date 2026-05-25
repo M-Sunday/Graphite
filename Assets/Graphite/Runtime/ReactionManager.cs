@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -322,6 +322,9 @@ public class ReactionManager : MonoBehaviour
         waveCharColors.Clear();
         alertCharColors.Clear();
         lastVisibleCharacterCount = -1;
+
+        if (dialogueText != null)
+            dialogueText.ForceMeshUpdate();
     }
 
     /// <summary>

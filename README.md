@@ -1,4 +1,4 @@
-# OpenCode
+# OpenCodeUN
 
 A Unity project — terminal emulator, development tools, and the Graphite dialog system for the Unity Editor.
 

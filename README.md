@@ -1,4 +1,4 @@
-# OpenCodeUN
+# Graphite
 
 A Unity project — terminal emulator, development tools, and the Graphite dialog system for the Unity Editor.
 
@@ -7,10 +7,7 @@ A Unity project — terminal emulator, development tools, and the Graphite dialo
 ```
 Assets/
 ├── Animations/      # Animation controllers and clips
-├── Editor/          # Editor scripts and tools
-│   ├── QuickAccessMenu.cs
-│   ├── QuickAccessScenes_Generated.cs
-│   └── TerminalWindow.cs
+├── Editor/          # Editor tools
 ├── Fonts/           # Custom fonts
 ├── Graphite/        # Graphite dialog system
 │   ├── Dialog/      # Dialog graph assets and character database

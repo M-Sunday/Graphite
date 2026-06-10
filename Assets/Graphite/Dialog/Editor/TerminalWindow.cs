@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace OpenCode.Editor
+namespace Graphite.Editor
 {
     public class TerminalWindow : EditorWindow
     {

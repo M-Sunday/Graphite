@@ -1,6 +1,6 @@
 {
-    "name": "OpenCode.Runtime",
-    "rootNamespace": "OpenCode",
+    "name": "Graphite.Runtime",
+    "rootNamespace": "Graphite",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

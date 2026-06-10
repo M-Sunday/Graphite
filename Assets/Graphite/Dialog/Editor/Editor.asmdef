@@ -1,8 +1,8 @@
 {
-    "name": "OpenCode.Editor",
-    "rootNamespace": "OpenCode.Editor",
+    "name": "Graphite.Editor",
+    "rootNamespace": "Graphite.Editor",
     "references": [
-        "OpenCode.Runtime",
+        "Graphite.Runtime",
         "Unity.TextMeshPro"
     ],
     "includePlatforms": [

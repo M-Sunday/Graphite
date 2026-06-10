@@ -29,5 +29,11 @@
 # Visual Studio Config
 .vsconfig
 
+# Unity generated
+Assets/Editor/
+Assets/Editor.meta
+Assets/Prefabs/
+Assets/Prefabs.meta
+
 # Windows
 Thumbs.db
